@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('logger', '0001_initial'),
+        ('simple_django_logger', '0001_initial'),
     ]
 
     operations = [
