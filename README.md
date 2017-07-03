@@ -94,9 +94,9 @@ class PostAPI(APIView):
 
     def get(self, request, post_id):
         logs = [
-            Logger.log_info(request, 'Some info message. For Django render.'),
-            Logger.log_debug(request, 'Some debug message. For Django render.'),
-            Logger.log_warn(request, 'Some warn message. For Django render.'),
+            Logger.log_info(request, 'Some info message. For DRF.'),
+            Logger.log_debug(request, 'Some debug message. For DRF.'),
+            Logger.log_warn(request, 'Some warn message. For DRF.'),
         ]
 
         context = {'some': 'data'}
