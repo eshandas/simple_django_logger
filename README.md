@@ -71,6 +71,7 @@ urlpatterns = [
 
 ```
 # For Django view
+from simple_django_logger.utils import Logger
 from simple_django_logger.response import render
 
 class TestLogs(View):
@@ -88,6 +89,7 @@ class TestLogs(View):
 
 
 # For Django Rest Framework view
+from simple_django_logger.utils import Logger
 from simple_django_logger.response import Response
 
 class PostAPI(APIView):
