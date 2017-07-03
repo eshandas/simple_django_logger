@@ -67,6 +67,68 @@ urlpatterns = [
 ]
 ```
 
+* Log Django request-response thread
+
+```
+# For Django view
+from simple_django_logger.response import render
+
+class TestLogs(View):
+    template_name = 'logger/logger_test.html'
+
+    def get(self, request):
+        logs = [
+            Logger.log_info(request, 'Some info message. For Django render.'),
+            Logger.log_debug(request, 'Some debug message. For Django render.'),
+            Logger.log_warn(request, 'Some warn message. For Django render.'),
+        ]
+
+        context = {'some': 'data'}
+        return render(request, self.template_name, context, logs=logs)
+
+
+# For Django Rest Framework view
+from simple_django_logger.response import Response
+
+class PostAPI(APIView):
+
+    def get(self, request, post_id):
+        logs = [
+            Logger.log_info(request, 'Some info message. For Django render.'),
+            Logger.log_debug(request, 'Some debug message. For Django render.'),
+            Logger.log_warn(request, 'Some warn message. For Django render.'),
+        ]
+
+        context = {'some': 'data'}
+        return Response(
+            context,
+            status=status.HTTP_200_OK,
+            logs=logs)
+```
+
+* Log events
+
+```
+from simple_django_logger.utils import EventLogger
+
+EventLogger.log_debug('Some debug message', tag='tag1')
+EventLogger.log_error('Some error message', tag='tag2')
+EventLogger.log_info('Some info message', tag='tag3')
+EventLogger.log_warn('Some warn message', tag='tag4')
+```
+
+* Log Requests calls
+
+```
+from simple_django_logger.utils import RequestLogger
+
+response = RequestLogger.get(
+    'https://jsonplaceholder.typicode.com/posts/1',
+    params={'query': 'value'},
+    user=request.user,
+    message='Some post request message')
+```
+
 * Access the logs by:
     - All logs: /logs/all/
     - All requests logs: /logs/requests/all/
