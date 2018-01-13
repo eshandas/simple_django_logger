@@ -9,12 +9,12 @@ setup(
     #     'simple_django_logger.migrations'],
     packages=find_packages(),
     include_package_data=True,
-    version='0.1.4',
+    version='1.0.0',
     description='A basic logger for Django',
     author='Eshan Das',
     author_email='eshandasnit@gmail.com',
     url='https://github.com/eshandas/simple_django_logger',  # use the URL to the github repo
-    download_url='https://github.com/eshandas/simple_django_logger/archive/0.1.4.tar.gz',  # Create a tag in github
+    download_url='https://github.com/eshandas/simple_django_logger/archive/1.0.0.tar.gz',  # Create a tag in github
     keywords=['django', 'logger'],
     classifiers=[],
 )
