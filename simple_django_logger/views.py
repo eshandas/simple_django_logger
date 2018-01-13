@@ -109,8 +109,8 @@ class AllRequestLogs(View):
     template_name = 'logger/all_request_logs.html'
 
     def get(self, request):
-        page = request.GET.get('page', 1)
-        show = request.GET.get(Keys.SHOW, 10)
+        page = int(request.GET.get('page', 1))
+        show = int(request.GET.get(Keys.SHOW, 10))
 
         logs = RequestLog.objects.all().order_by('-created_on')
 
@@ -142,10 +142,25 @@ class AllRequestLogs(View):
         except EmptyPage:
             logs = paginator.page(paginator.num_pages)
 
-        query_string = '&show=%s&status=%s&url=%s&method=%s' % (
-            show, status, url, method)
+        if logs.has_next():
+            next_url = 'page=%d&show=%s&url=%s&status=%s&method=%s' % (
+                page + 1, show, url, status, method)
+        else:
+            next_url = None
 
-        context = {'logs': logs, 'query_string': query_string}
+        if logs.has_previous():
+            prev_url = 'page=%d&show=%s&url=%s&status=%s&method=%s' % (
+                page - 1, show, url, status, method)
+        else:
+            prev_url = None
+
+        context = {
+            'logs': logs,
+            'next_url': next_url,
+            'prev_url': prev_url,
+            'status': status,
+            'method': method,
+            'url': url}
         return render(request, self.template_name, context)
 
     def post(self, request):
@@ -153,12 +168,33 @@ class AllRequestLogs(View):
         return HttpResponseRedirect(reverse('logger:all_request_logs'))
 
 
+class SingleRequestLog(View):
+    template_name = 'logger/request_log.html'
+
+    def get(self, request, log_id):
+        try:
+            log = RequestLog.objects.get(id=log_id)
+        except RequestLog.DoesNotExist:
+            raise Http404
+
+        context = {
+            'log': log}
+        return render(request, self.template_name, context)
+
+    def post(self, request, log_id):
+        try:
+            RequestLog.objects.get(id=log_id).delete()
+        except RequestLog.DoesNotExist:
+            raise Http404
+        return HttpResponseRedirect(reverse('logger:all_request_logs'))
+
+
 class AllEventLogs(View):
     template_name = 'logger/all_event_logs.html'
 
     def get(self, request):
-        page = request.GET.get(Keys.PAGE, 1)
-        show = request.GET.get(Keys.SHOW, 10)
+        page = int(request.GET.get(Keys.PAGE, 1))
+        show = int(request.GET.get(Keys.SHOW, 10))
 
         logs = EventLog.objects.all().order_by('-created_on')
 
@@ -183,17 +219,33 @@ class AllEventLogs(View):
         if message:
             logs = logs.filter(message__icontains=message)
 
-        paginator = Paginator(logs, 10)
+        paginator = Paginator(logs, show)
 
         try:
             logs = paginator.page(page)
         except EmptyPage:
             logs = paginator.page(paginator.num_pages)
 
-        query_string = '&show=%s&tag=%s&level=%s&message=%s' % (
-            show, tag, log_level, message)
+        if logs.has_next():
+            next_url = 'page=%d&level=%s&tag=%s&message=%s' % (
+                page + 1, log_level, tag, message)
+        else:
+            next_url = None
 
-        context = {'logs': logs, 'log_levels': EventLog.LOG_LEVELS, 'query_string': query_string}
+        if logs.has_previous():
+            prev_url = 'page=%d&level=%s&tag=%s&message=%s' % (
+                page - 1, log_level, tag, message)
+        else:
+            prev_url = None
+
+        context = {
+            'logs': logs,
+            'log_levels': EventLog.LOG_LEVELS,
+            'tag': tag,
+            'log_level': log_level,
+            'message': message,
+            'next_url': next_url,
+            'prev_url': prev_url}
         return render(request, self.template_name, context)
 
     def post(self, request):

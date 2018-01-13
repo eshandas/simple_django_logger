@@ -21,25 +21,25 @@
       <label for="method">Log Level:</label>
       <select id="method" name="method" class="form-control">
         <option value="">All</option>
-        <option value="GET">GET</option>
-        <option value="POST">POST</option>
-        <option value="PUT">PUT</option>
-        <option value="DELETE">DELETE</option>
+        <option value="GET" {% if method == 'GET' %}selected{% endif %}>GET</option>
+        <option value="POST" {% if method == 'POST' %}selected{% endif %}>POST</option>
+        <option value="PUT" {% if method == 'PUT' %}selected{% endif %}>PUT</option>
+        <option value="DELETE" {% if method == 'DELETE' %}selected{% endif %}>DELETE</option>
       </select>
     </div>
     <div class="form-group">
       <label for="status">Status:</label>
       <select id="status" name="status" class="form-control">
         <option value="">All</option>
-        <option value="200">> 200</option>
-        <option value="300">> 300</option>
-        <option value="400">> 400</option>
-        <option value="500">> 500</option>
+        <option value="200" {% if status >= 200 and status < 300 %}selected{% endif %}>> 200</option>
+        <option value="300" {% if status >= 300 and status < 400 %}selected{% endif %}>> 300</option>
+        <option value="400" {% if status >= 400 and status < 500 %}selected{% endif %}>> 400</option>
+        <option value="500" {% if status >= 500 and status < 600 %}selected{% endif %}>> 500</option>
       </select>
     </div>
     <div class="form-group">
       <label for="url">Url:</label>
-      <input type="text" class="form-control" id="url" name="url">
+      <input type="text" class="form-control" id="url" name="url" value="{{ url }}">
     </div>
     <button type="submit" class="btn btn-success">Submit</button>
   </form>
@@ -63,16 +63,22 @@
             <div class="col-md-4">
               <h4 class="panel-title"><b>Status: {{ log.response_status }} {{ log.response_reason }}</b></h4>
             </div>
+            <div class="col-md-8">
+              <h4 class="panel-title"><b>Share: </b>{{ request.get_host }}{% url 'logger:request_log' log.id %}</h4>
+            </div>
           </div>
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
               <b>Url:</b> {{ log.method }} {{ log.url }}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
               <b>Time:</b> {{ log.response_time }} ms
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
               <b>{{ log.created_on }}</b>
+            </div>
+            <div class="col-md-2">
+              <a href="{% url 'logger:request_log' log.id %}">Details</a>
             </div>
           </div>
         </div>
@@ -170,37 +176,28 @@
                 </div>
               </div>
             </div>
-
-              
-
-
-            
-
-
             
           </div>
         </div>
       </div>
     {% endfor %}
   </div>
-  <div class="row">
-    <div class="col-md-10">
-      <ul class="pagination pagination-md">
-        {% if logs.has_previous %}
-          <li><a href="?page={{ logs.previous_page_number }}">Previous</a></li>
-        {% endif %}
-        <li class="disabled"><a href="#">Page {{ logs.number }} of {{ logs.paginator.num_pages }}</a></li>
-        {% if logs.has_next %}
-          <li><a href="?page={{ logs.next_page_number }}">Next</a></li>
-        {% endif %}
-      </ul>
-    </div>
-    <div class="col-md-2">
-      <form action="{% url 'logger:all_request_logs' %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger pull-right">Delete All</button>
-      </form>
-    </div>
+  <div class="col-md-10">
+    <ul class="pagination pagination-md">
+      {% if logs.has_previous %}
+        <li><a href="?{{ prev_url }}">Prev</a></li>
+      {% endif %}
+      <li class="disabled"><a href="#">Page {{ logs.number }} of {{ logs.paginator.num_pages }}</a></li>
+      {% if logs.has_next %}
+        <li><a href="?{{ next_url }}">Next</a></li>
+      {% endif %}
+    </ul>
+  </div>
+  <div class="col-md-2">
+    <form action="{% url 'logger:all_request_logs' %}" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger pull-right">Delete All</button>
+    </form>
   </div>
 {% endblock %}
 
