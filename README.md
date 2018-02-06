@@ -3,7 +3,7 @@ A basic logger for Django
 
 ## Version
 
-1.0.0
+1.1.0
 
 ## Features
 
@@ -13,6 +13,7 @@ A basic logger for Django
 * Has four log levels: INFO, DEBUG, WARN and ERROR
 * A UI to access the logs in the Django application itself
 * Filters and color coded
+* Auto purging tasks for old logs
 
 ## Dependencies
 
