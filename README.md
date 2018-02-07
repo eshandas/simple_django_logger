@@ -58,6 +58,21 @@ MIDDLEWARE_CLASSES = (
 )
 ```
 
+* In celery, add the following to access the methods for auto purging old logs
+
+```
+from celery import Celery
+
+app = Celery(
+    'main',
+    broker='redis://localhost:6379/0',
+    backend='redis://localhost:6379/0',
+    include=[
+        ...
+        'simple_django_logger.tasks',
+        ...])
+```
+
 * Add in urls.py
 
 ```
@@ -136,3 +151,8 @@ response = RequestLogger.get(
     - All logs: /logs/all/
     - All requests logs: /logs/requests/all/
     - All event logs: /logs/events/all/
+
+* The following tasks can be accessed from Celery admin:
+- **Purge old logs**
+- **Purge old event logs**
+- **Purge old request logs**
