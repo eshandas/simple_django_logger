@@ -25,7 +25,7 @@ class AllPostsView(View):
         A view to get all the posts.
         """
         page = request.GET.get(PaginationKeys.PAGE, 1)
-
+        abc = 0/0
         posts = Post.objects.all().order_by('-added_on')
         paginator = Paginator(posts, PaginationKeys.ITEMS_PER_PAGE)
 

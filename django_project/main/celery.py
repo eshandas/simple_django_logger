@@ -1,13 +1,14 @@
-from __future__ import absolute_import
+
 
 from celery import Celery
 
-app = Celery('main',
-             broker='redis://localhost:6379/0',
-             backend='redis://localhost:6379/0',
-             include=[
-                    'tasks.email_tasks.email_tasks',
-                    'simple_django_logger.tasks'])
+app = Celery(
+    'main',
+    broker='redis://localhost:6379/0',
+    backend='redis://localhost:6379/0',
+    include=[
+        'tasks.email_tasks.email_tasks',
+        'simple_django_logger.tasks'])
 
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.

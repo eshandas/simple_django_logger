@@ -17,7 +17,7 @@ A basic logger for Django
 
 ## Dependencies
 
-* Django 1.11
+* Django 1.10 and above
 * Requests
 
 ## Installation
@@ -44,17 +44,10 @@ INSTALLED_APPS = (
 
 ```
 MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
     ...
-    'django_user_agents.middleware.UserAgentMiddleware',
     ...
+    ...
+    'simple_django_logger.middleware.errormiddleware.ErrorMiddleware',
 )
 ```
 

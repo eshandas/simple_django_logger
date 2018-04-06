@@ -28,12 +28,12 @@ class ObjectLogger(object):
         log.cookies = json.dumps(request.COOKIES)
 
         # --- Request meta info
-        log.meta = ','.join('"%s": "%s"' % (k, str(v)) for k, v in request.META.items())
+        log.meta = ','.join('"%s": "%s"' % (k, str(v)) for k, v in list(request.META.items()))
         log.meta = '{%s}' % log.meta
         log.meta = log.meta.replace('\\', '|')
 
         # --- User info
-        if request.user and request.user.is_authenticated():
+        if request.user and request.user.is_authenticated:
             log.user_id = request.user.id
             log.user_name = request.user.email
 
@@ -65,7 +65,7 @@ class ObjectLogger(object):
     def log_exception(self, log=None, exception=None):
         # --- Exception info
         log.exception_type = type(exception).__name__
-        log.message = exception.message
+        log.message = str(exception)
         log.stack_trace = traceback.format_exc()
 
         return log
@@ -168,7 +168,7 @@ class RequestObjectLogger(object):
         log.method = request.method
         log.url = request.url
         log.request_data = data if isinstance(data, str) else json.dumps(data)
-        headers = {val[0]: val[1] for val in request.headers.items()}
+        headers = {val[0]: val[1] for val in list(request.headers.items())}
         log.request_headers = json.dumps(headers)
 
         return log
@@ -182,7 +182,7 @@ class RequestObjectLogger(object):
 
         # --- User data
         if user:
-            if user.is_authenticated():
+            if user.is_authenticated:
                 log.user_id = user.id
                 log.user_name = user.email
         log.message = message if message else ''

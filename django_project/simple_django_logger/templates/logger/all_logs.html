@@ -101,7 +101,7 @@
             </div>
           {% endif %}
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
               <b>Url:</b> {{ log.request_url }}
             </div>
             <div class="col-md-2">
@@ -109,9 +109,6 @@
             </div>
             <div class="col-md-2">
               <b>{{ log.created_on }}</b>
-            </div>
-            <div class="col-md-2">
-              <a href="{% url 'logger:log' log.id %}">Details</a>
             </div>
           </div>
         </div>
@@ -141,8 +138,11 @@
                 <pre>{{ log.user_name }}</pre>
               </div>
             </div>
-
-
+            <div class="row">
+              <div class="col-md-12">
+                <a target="_blank" class="btn btn-info pull-right" href="{% url 'logger:log' log.id %}">Details</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import Http404
 
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from .models import (
     Log,
@@ -263,7 +263,8 @@ class TestLogs(View):
             Logger.log_warn(request, 'Some warn message. For Django render.'),
         ]
 
-        context = {'some': 'data'}
+        context = {
+            'logger_url': reverse('logger:all_logs')}
         return logger_render(request, self.template_name, context, logs=logs)
 
 
@@ -276,7 +277,10 @@ class TestRequestLogs(View):
             params={'query': 'value'},
             user=request.user,
             message='Some post request message')
-        return render(request, self.template_name, {'text': response.text})
+        context = {
+            'text': response.text,
+            'logger_url': reverse('logger:all_request_logs')}
+        return render(request, self.template_name, context)
 
 
 class TestEventLogs(View):
@@ -288,5 +292,6 @@ class TestEventLogs(View):
         EventLogger.log_info('Some info message', tag='tag3')
         EventLogger.log_warn('Some warn message', tag='tag4')
 
-        context = {'some': 'data'}
+        context = {
+            'logger_url': reverse('logger:all_event_logs')}
         return render(request, self.template_name, context)

@@ -17,4 +17,7 @@ setup(
     download_url='https://github.com/eshandas/simple_django_logger/archive/1.1.0.tar.gz',  # Create a tag in github
     keywords=['django', 'logger'],
     classifiers=[],
+    install_requires=[
+        'Django>=1.10',
+        'requests'],
 )

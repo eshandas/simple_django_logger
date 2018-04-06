@@ -11,6 +11,7 @@ from .views import (
     TestEventLogs,
 )
 
+app_name = 'logger'
 urlpatterns = [
     url(r'^(?P<log_id>[0-9]+)/$', SingleLog.as_view(), name='log'),
     url(r'^all/$', AllLogs.as_view(), name='all_logs'),

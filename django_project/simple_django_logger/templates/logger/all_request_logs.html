@@ -68,7 +68,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
               <b>Url:</b> {{ log.method }} {{ log.url }}
             </div>
             <div class="col-md-2">
@@ -76,9 +76,6 @@
             </div>
             <div class="col-md-2">
               <b>{{ log.created_on }}</b>
-            </div>
-            <div class="col-md-2">
-              <a href="{% url 'logger:request_log' log.id %}">Details</a>
             </div>
           </div>
         </div>
@@ -109,74 +106,11 @@
               </div>
             </div>
 
-
-            <ul class="nav nav-tabs">
-              <li class="active"><a data-toggle="tab" href="#request{{ log.id }}">Request</a></li>
-              <li><a data-toggle="tab" href="#response{{ log.id }}">Response</a></li>
-            </ul>
-            <div class="tab-content">
-
-              <div id="request{{ log.id }}" class="tab-pane fade in active">
-                <h3>Request</h3>
-                <div class="row">
-                  <div class="col-md-2">
-                    <b>Url:</b>
-                  </div>
-                  <div class="col-md-10">
-                    <pre>{{ log.url }}</pre>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <b>Data:</b>
-                  </div>
-                  <div class="col-md-10">
-                    <input type="hidden" id="logRequestDataData" value="{{ log.request_data }}" />
-                    <pre id="logRequestData" style="padding-left: 3%;"></pre>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <b>Headers:</b>
-                  </div>
-                  <div class="col-md-10">
-                    <input type="hidden" id="logRequestHeadersData" value="{{ log.request_headers }}" />
-                    <pre id="logRequestHeaders" style="padding-left: 3%;"></pre>
-                  </div>
-                </div>
-              </div>
-
-
-              <div id="response{{ log.id }}" class="tab-pane fade">
-                <h3>Response</h3>
-                <div class="row">
-                  <div class="col-md-2">
-                    <b>Body:</b>
-                  </div>
-                  <div class="col-md-10">
-                    <input type="hidden" id="logResponseTextData" value="{{ log.response_text }}" />
-                    <pre id="logResponseText" style="padding-left: 3%;"></pre>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <b>Status:</b>
-                  </div>
-                  <div class="col-md-10">
-                    <pre><code>{{ log.response_status }} {{ log.response_reason }}</code></pre>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <b>Time:</b>
-                  </div>
-                  <div class="col-md-10">
-                    <pre><code>{{ log.response_time }} ms</code></pre>
-                  </div>
-                </div>
+            <div class="row">
+              <div class="col-md-12">
+                <a target="_blank" class="btn btn-info pull-right" href="{% url 'logger:request_log' log.id %}">Details</a>
               </div>
             </div>
-            
           </div>
         </div>
       </div>
