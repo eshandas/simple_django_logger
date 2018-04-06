@@ -9,7 +9,7 @@ setup(
     #     'simple_django_logger.migrations'],
     packages=find_packages(),
     include_package_data=True,
-    version='1.1.0',
+    version='2.0.0',
     description='A basic logger for Django',
     author='Eshan Das',
     author_email='eshandasnit@gmail.com',

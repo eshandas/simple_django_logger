@@ -3,7 +3,7 @@ A basic logger for Django
 
 ## Version
 
-1.1.0
+2.0.0
 
 ## Features
 
