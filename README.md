@@ -145,6 +145,11 @@ response = RequestLogger.get(
     - All requests logs: /logs/requests/all/
     - All event logs: /logs/events/all/
 
+* Test by generating a few logs. Go to:
+    - All logs: /logs/test/
+    - All requests logs: /logs/requests/test/
+    - All event logs: /logs/events/test/
+
 * The following tasks can be accessed from Celery admin:
 - **Purge old logs**
 - **Purge old event logs**
