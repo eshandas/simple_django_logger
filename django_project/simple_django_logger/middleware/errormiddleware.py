@@ -1,4 +1,5 @@
 from simple_django_logger.utils import Logger
+from django.http.request import RawPostDataException
 
 
 class ErrorMiddleware(object):
@@ -17,7 +18,10 @@ class ErrorMiddleware(object):
     #     self._initial_http_body = request.body
 
     def process_view(self, request, callback, callback_args, callback_kwargs):
-        self._initial_http_body = request.body
+        try:
+            self._initial_http_body = request.body
+        except RawPostDataException:
+            self._initial_http_body = {}
 
     def process_exception(self, request, exception):
         Logger.log_error(request, self._initial_http_body, exception)
