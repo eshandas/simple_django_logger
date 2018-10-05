@@ -1,14 +1,12 @@
-{% extends 'site_templates/site_master.html' %}
+{% extends 'logger/site_master.html' %}
 {% load staticfiles %}
 
 {% block header_block %}
   <title>Event Logs</title>
 
 
-  <link rel="stylesheet" href="{% static 'plugins/highlightjs/highlight.min.css' %}" />
   
 
-  <link rel="stylesheet" href="{% static 'plugins/jquery.json-viewer/jquery.json-viewer.css' %}">
   
 {% endblock %}
 
@@ -126,8 +124,6 @@
 {% endblock %}
 
 {% block js_block %}
-  <script src="{% static 'plugins/highlightjs/highlight.min.js' %}"></script>
-  <script src="{% static 'plugins/jquery.json-viewer/jquery.json-viewer.js' %}"></script>
 
   <script>hljs.initHighlightingOnLoad();</script>
 {% endblock %}

@@ -1,19 +1,20 @@
-{% extends 'site_templates/site_master.html' %}
+{% extends 'logger/site_master.html' %}
 {% load staticfiles %}
 
 {% block header_block %}
   <title>Server Logs</title>
 
 
-  <link rel="stylesheet" href="{% static 'plugins/highlightjs/highlight.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'logger/highlightjs/highlight.min.css' %}" />
   
 
-  <link rel="stylesheet" href="{% static 'plugins/jquery.json-viewer/jquery.json-viewer.css' %}">
+  <link rel="stylesheet" href="{% static 'logger/jquery.json-viewer/jquery.json-viewer.css' %}">
   
 {% endblock %}
 
 {% block body_block %}
   <h2>Server Logs</h2>
+    <a href="{% url 'logger:all_logs' %}"><< Back</a>
 
     <div class="panel 
         {% if log.log_level == 1 %}
@@ -268,8 +269,8 @@
 {% endblock %}
 
 {% block js_block %}
-  <script src="{% static 'plugins/highlightjs/highlight.min.js' %}"></script>
-  <script src="{% static 'plugins/jquery.json-viewer/jquery.json-viewer.js' %}"></script>
+  <script src="{% static 'logger/highlightjs/highlight.min.js' %}"></script>
+  <script src="{% static 'logger/jquery.json-viewer/jquery.json-viewer.js' %}"></script>
 
   <script src="{% static 'logger/js/all_logs.js' %}"></script>
   <script>hljs.initHighlightingOnLoad();</script>
