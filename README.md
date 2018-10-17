@@ -30,25 +30,24 @@ pip install simple_django_logger
 
 ## Setup
 
-* Add in INSTALLED_APPS
+* Add in INSTALLED_APPS (maintaining the order with django_user_agents)
 
 ```
 INSTALLED_APPS = (
     ...
     'django_user_agents',
-    ...
     'simple_django_logger',
     ...
 )
 ```
 
-* Add in MIDDLEWARE_CLASSES. Make sure that it is placed after all the Django middleware classes
+* Add in MIDDLEWARE_CLASSES. Make sure that it is placed after all the Django middleware classes (maintaining the order with django_user_agents)
 
 ```
 MIDDLEWARE_CLASSES = (
     ...
-    'django_user_agents.middleware.UserAgentMiddleware',
     'simple_django_logger.middleware.errormiddleware.ErrorMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 )
 ```
 
